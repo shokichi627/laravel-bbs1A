@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Http\Requests\PostRequest;
 
 class PostsController extends Controller
 {
@@ -19,12 +20,12 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $params = $request->validate([
-            'title' => 'required|max:50',
-            'body' => 'required|max:2000',
-        ]);
+        $params = [
+            'title' => $request->title,
+            'body' => $request->body,
+        ];
 
         Post::create($params);
 
@@ -50,12 +51,12 @@ class PostsController extends Controller
         ]);
     }
 
-    public function update($post_id, Request $request)
+    public function update($post_id, PostRequest $request)
     {
-        $params = $request->validate([
-            'title' => 'required|max:50',
-            'body' => 'required|max:2000',
-        ]);
+        $params = [
+            'title' => $request->title,
+            'body' => $request->body,
+        ];
 
         $post = Post::findOrFail($post_id);
         $post->fill($params)->save();
