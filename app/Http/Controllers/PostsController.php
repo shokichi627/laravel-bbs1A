@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 use App\Http\Requests\PostRequest;
 
 class PostsController extends Controller
@@ -17,7 +18,10 @@ class PostsController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $category = new Category;
+        $categories = $category->getLists()->prepend('選択', '');
+
+        return view('posts.create', ['categories' => $categories]);
     }
 
     public function store(PostRequest $request)
@@ -25,6 +29,7 @@ class PostsController extends Controller
         $params = [
             'title' => $request->title,
             'body' => $request->body,
+            'category_id' => $request->category_id,
         ];
 
         Post::create($params);
@@ -44,10 +49,14 @@ class PostsController extends Controller
 
     public function edit($post_id)
     {
+        $category = new Category;
+        $categories = $category->getLists();
+
         $post = Post::findOrFail($post_id);
 
         return view('posts.edit', [
             'post' => $post,
+            'categories' => $categories
         ]);
     }
 
@@ -56,6 +65,7 @@ class PostsController extends Controller
         $params = [
             'title' => $request->title,
             'body' => $request->body,
+            'category_id' => $request->category_id,
         ];
 
         $post = Post::findOrFail($post_id);

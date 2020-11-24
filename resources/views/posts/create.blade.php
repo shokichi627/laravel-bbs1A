@@ -25,6 +25,15 @@
         </div>
 
         <div class="form-group">
+          <select id="category_id" name="category_id"
+            class="form-control {{ $errors->has('category_id') ? 'is-invalid' : '' }}" value="{{ old('category_id') }}">
+            @foreach($categories as $id => $name)
+            <option value="{{ $id }}">{{ $name }}</option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="form-group">
           <label for="body">
             本文
           </label>

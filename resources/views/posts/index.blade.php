@@ -30,6 +30,9 @@
         コメント {{ $post->comments->count() }}件
       </span>
       @endif
+      <span class="badge badge-primary">
+        {{ $post->category->name }}
+      </span>
     </div>
   </div>
   @endforeach

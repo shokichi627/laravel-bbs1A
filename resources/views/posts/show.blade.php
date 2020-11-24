@@ -14,10 +14,14 @@
         編集する
       </a>
     </div>
-    <h1 class="h5 mb-4">
+    <h1 class="h5">
       {{ $post->title }}
     </h1>
-
+    <p>
+      <span class="badge badge-primary">
+        {{ $post->category->name }}
+      </span>
+    </p>
     <p class="mb-5">
       {!! nl2br(e($post->body)) !!}
     </p>
