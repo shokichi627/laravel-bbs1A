@@ -13,6 +13,15 @@ class Post extends Model
         'category_id',
     ];
 
+    public function deletePost($post_id)
+    {
+        $post = Post::findOrFail($post_id);
+
+        \DB::transaction(function () use ($post) {
+            $post->comments()->delete();
+            $post->delete();
+        });
+    }
     public function comments()
     {
         return $this->hasMany('App\Comment');
