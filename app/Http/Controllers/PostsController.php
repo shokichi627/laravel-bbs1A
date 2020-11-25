@@ -76,8 +76,11 @@ class PostsController extends Controller
 
     public function destroy($post_id)
     {
-        $post = new Post;
-        $post->deletePost($post_id);
+        $post = Post::findOrFail($post_id);
+        // TODO
+        \DB::transaction(function () use ($post) {
+            $post->deletePost();
+        });
 
         return redirect()->route('top');
     }
